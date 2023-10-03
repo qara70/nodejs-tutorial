@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "nodejs-tutorial",
   "version": "1.0.0",
   "description": "This is tutorial use Node.js for begginer",
