@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/qara70/nodejs-tutorial/issues"
   },
-  "homepage": "https://github.com/qara70/nodejs-tutorial#readme"
+  "homepage": "https://github.com/qara70/nodejs-tutorial#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
