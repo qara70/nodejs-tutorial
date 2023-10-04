@@ -3,6 +3,7 @@
   "name": "nodejs-tutorial",
   "version": "1.0.0",
   "description": "This is tutorial use Node.js for begginer",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
