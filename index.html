@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>hello</h1>
+    <div id="app"></div>
+</body>
+</html>
+<script>
+    console.log('this is index.html');
+    const app = document.getElementById('app');
+    const backendUrl = 'http://localhost:3000';
+    async function getData() {
+        const response = await fetch(`${backendUrl}/api`);
+        const data = await response.json();
+        console.log(data);
+        app.innerHTML = data.message;
+    }
+    getData();
+</script>
