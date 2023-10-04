@@ -8,6 +8,7 @@ app.get("/", (req, res) => {
 );
 
 app.get("/api", (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'null')
     res.status(200).json({ message: "Hello from server!" });
     }
 );
