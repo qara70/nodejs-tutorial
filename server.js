@@ -1,4 +1,6 @@
 import express from "express";
+import sequelize from "./sequelize";
+import Todo from "./todo";
 
 const app = express();
 
@@ -13,6 +15,23 @@ app.get("/api", (req, res) => {
     }
 );
 
-app.listen(3000, () =>
-    console.log("Server listening on port 3000")
+app.post("/api/todo", async (req, res) => {
+    const todo = await Todo.create({
+        title: "Todo 1",
+        description: "Todo 1 description",
+        status: false
+    });
+    res.status(200).json({ todo });
+    }
+);
+
+sequelize.sync({force: true}).then(() => {
+    console.log("Database & tables created!");
+    app.listen(3000, () =>
+        console.log("Server listening on port 3000")
+    );
+    }
+).catch((err) => {
+    console.error('Unable to connect to the database:', err);
+    }
 );
