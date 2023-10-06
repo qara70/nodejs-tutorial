@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "./sequelize"
+import sequelize from "./sequelize.js"
 
 class Todo extends Model { }
 

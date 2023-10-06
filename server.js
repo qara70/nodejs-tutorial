@@ -1,6 +1,6 @@
 import express from "express";
-import sequelize from "./sequelize";
-import Todo from "./todo";
+import sequelize from "./sequelize.js";
+import Todo from "./todo.js";
 
 const app = express();
 
