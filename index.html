@@ -22,8 +22,9 @@
     async function getData() {
         const response = await fetch(`${backendUrl}/api`);
         const data = await response.json();
-        console.log(data);
-        app.innerHTML = data.message;
+        app.innerHTML = data.todos.map(todo => {
+            return `<div>${todo.title}</div><div>${todo.description}</div><input type="checkbox" value=${todo.status}>`;
+        }).join('')
     }
     getData();
 
