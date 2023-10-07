@@ -28,26 +28,26 @@
     }
     getData();
 
-    const sendData = () => {
+    const sendData = async () => {
         const title = document.querySelector('input[name="title"]').value;
         const description = document.querySelector('input[name="description"]').value;
         const data = {
             title,
             description
         };
-        fetch(`${backendUrl}/api/save`, {
+        const response = await fetch(`${backendUrl}/api/save`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            console.log(error);
         });
+        const todoData = await response.json();
+
+        const app = document.getElementById('app');
+        app.innerHTML = todoData.todos.map(todo => {
+            return `<div>${todo.title}</div><div>${todo.description}</div><input type="checkbox" value=${todo.status}>`;
+        }).join('')
+
     }
 </script>

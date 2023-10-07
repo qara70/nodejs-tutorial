@@ -30,12 +30,14 @@ app.post("/api/todo", async (req, res) => {
 
 app.post("/api/save", async (req, res) => {
     console.log('/api/save', req.body);
-    const todo = await Todo.create({
+    await Todo.create({
         title: req.body.title,
         description: req.body.description,
         status: req.body.status ?? false
     });
-    res.status(200).json({ todo });
+    const todos = await Todo.findAll();
+
+    res.status(200).json({ todos });
     }
 );
 
