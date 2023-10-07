@@ -23,7 +23,7 @@
         const response = await fetch(`${backendUrl}/api`);
         const data = await response.json();
         app.innerHTML = data.todos.map(todo => {
-            return `<div>${todo.title}</div><div>${todo.description}</div><input type="checkbox" value=${todo.status}>`;
+            return `<div>${todo.title}</div><div>${todo.description}</div><input type="checkbox" value=${todo.status}><button onclick="deleteData(${todo.id})">削除</button>`;
         }).join('')
     }
     getData();
@@ -35,7 +35,7 @@
             title,
             description
         };
-        const response = await fetch(`${backendUrl}/api/save`, {
+        const response = await fetch(`${backendUrl}/api/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,6 +48,20 @@
         app.innerHTML = todoData.todos.map(todo => {
             return `<div>${todo.title}</div><div>${todo.description}</div><input type="checkbox" value=${todo.status}>`;
         }).join('')
+    }
 
+    const deleteData = async (id) => {
+        const response = await fetch(`${backendUrl}/api/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const todoData = await response.json();
+
+        const app = document.getElementById('app');
+        app.innerHTML = todoData.todos.map(todo => {
+            return `<div>${todo.title}</div><div>${todo.description}</div><input type="checkbox" value=${todo.status}>`;
+        }).join('')
     }
 </script>

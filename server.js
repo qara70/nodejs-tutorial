@@ -28,8 +28,8 @@ app.post("/api/todo", async (req, res) => {
     }
 );
 
-app.post("/api/save", async (req, res) => {
-    console.log('/api/save', req.body);
+app.post("/api/create", async (req, res) => {
+    console.log('/api/create', req.body);
     await Todo.create({
         title: req.body.title,
         description: req.body.description,
@@ -37,6 +37,14 @@ app.post("/api/save", async (req, res) => {
     });
     const todos = await Todo.findAll();
 
+    res.status(200).json({ todos });
+    }
+);
+
+app.delete('/api/delete/:id', async (req, res) => {
+    const todo = await Todo.findByPk(req.params.id);
+    await todo.destroy();
+    const todos = await Todo.findAll();
     res.status(200).json({ todos });
     }
 );
