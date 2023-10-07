@@ -1,18 +1,21 @@
 import express from "express";
+import cors from "cors";
 import sequelize from "./sequelize.js";
 import Todo from "./todo.js";
 
 const app = express();
+app.use(cors({ origin: 'null' }));
+app.use(express.json());
 
 app.get("/", (req, res) => {
     res.status(200).send("Hello World!");
     }
 );
 
-app.get("/api", (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', 'null')
-    res.status(200).json({ message: "Hello from server!" });
-    }
+app.get("/api", async (req, res) => {
+    const todos = await Todo.findAll();
+    res.status(200).json({ todos });
+}
 );
 
 app.post("/api/todo", async (req, res) => {
@@ -25,7 +28,18 @@ app.post("/api/todo", async (req, res) => {
     }
 );
 
-sequelize.sync({force: true}).then(() => {
+app.post("/api/save", async (req, res) => {
+    console.log('/api/save', req.body);
+    const todo = await Todo.create({
+        title: req.body.title,
+        description: req.body.description,
+        status: req.body.status ?? false
+    });
+    res.status(200).json({ todo });
+    }
+);
+
+sequelize.sync().then(() => {
     console.log("Database & tables created!");
     app.listen(3000, () =>
         console.log("Server listening on port 3000")

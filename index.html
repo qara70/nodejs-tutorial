@@ -8,6 +8,11 @@
 <body>
     <h1>hello</h1>
     <div id="app"></div>
+    <div>
+        <input type="text" name="title">
+        <input type="text" name="description">
+        <button onclick="sendData()">保存する</button>
+    </div>
 </body>
 </html>
 <script>
@@ -21,4 +26,27 @@
         app.innerHTML = data.message;
     }
     getData();
+
+    const sendData = () => {
+        const title = document.querySelector('input[name="title"]').value;
+        const description = document.querySelector('input[name="description"]').value;
+        const data = {
+            title,
+            description
+        };
+        fetch(`${backendUrl}/api/save`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
 </script>
