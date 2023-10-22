@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"></link>
     <title>Document</title>
 </head>
 <body>
-    <h1>hello</h1>
+    <h1>WEBアプリ制作体験会</h1>
+    <p>Node.jsでAPIサーバーを作成します！</p>
     <div id="app"></div>
-    <div>
-        <input type="text" name="title">
-        <input type="text" name="description">
+    <div class="input-container">
+        <div>
+            <p>タイトル</p>
+            <input type="text" name="title">
+        </div>
+        <div>
+            <p>説明</p>            
+            <input type="text" name="description">
+        </div>
         <button onclick="sendData()">保存する</button>
     </div>
 </body>
@@ -19,14 +27,27 @@
     console.log('this is index.html');
     const app = document.getElementById('app');
     const backendUrl = 'http://localhost:3000';
+
+    const todoDom = (todo) => {
+        return `
+            <div class="todo-item">
+                <div>${todo.title}</div>
+                <div>${todo.description}</div>
+                <input type="checkbox" value=${todo.status}>
+                <button onclick="deleteData(${todo.id})">削除</button>
+            </div>
+        `;
+    }
+
     async function getData() {
         const response = await fetch(`${backendUrl}/api`);
         const data = await response.json();
         app.innerHTML = data.todos.map(todo => {
-            return `<div>${todo.title}</div><div>${todo.description}</div><input type="checkbox" value=${todo.status}><button onclick="deleteData(${todo.id})">削除</button>`;
+            return todoDom(todo);
         }).join('')
     }
     getData();
+    
 
     const sendData = async () => {
         const title = document.querySelector('input[name="title"]').value;
@@ -46,7 +67,7 @@
 
         const app = document.getElementById('app');
         app.innerHTML = todoData.todos.map(todo => {
-            return `<div>${todo.title}</div><div>${todo.description}</div><input type="checkbox" value=${todo.status}>`;
+            return todoDom(todo);
         }).join('')
     }
 
@@ -61,7 +82,7 @@
 
         const app = document.getElementById('app');
         app.innerHTML = todoData.todos.map(todo => {
-            return `<div>${todo.title}</div><div>${todo.description}</div><input type="checkbox" value=${todo.status}>`;
+            return todoDom(todo);
         }).join('')
     }
 </script>
